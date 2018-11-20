@@ -23,63 +23,37 @@ $db=mysql_select_db("bdfacturacion")or die("Error en Db");*/
 <!--AQUI COMIENZA EL CODIGO DE PHP CON MYSQL-->
 
 <?php
-$nitocc="";
-$nombre="";
-$direccion="";
-$telefono="";
-$fechaingreso="";
-$cupocredito="";
+$CodProd="";
+$Descripcion="";
+$PrecioCosto="";
+$Existencia="";
 $foto="";
 
 if(isset($_POST["btn1"]))
 	{
 		$btn=$_POST["btn1"];
-		$nitoccbus=$_POST["txtnitoccbus"];
+		$CodProdbus=$_POST["txtCodProdbus"];
 		if($btn=="Buscar")
 		{
 			
-			$res = $MySQLiconexion->query("select * from tblcliente where nitocc='$nitoccbus'");
+			$res = $MySQLiconexion->query("select * from tblproducto where CodProd='$CodProdbus'");
 			while($resul=$res->fetch_array())
 			{
-				$nitocc=$resul[0];
-				$nombre=$resul[1];
-				$direccion=$resul[2];
-				$telefono=$resul[3];
-				$fechaingreso=$resul[4];
-				$cupocredito=$resul[5];
-				$foto=$resul[6];
+				$CodProd=$resul[0];
+				$Descripcion=$resul[1];
+				$PrecioCosto=$resul[2];
+				$Existencia=$resul[3];
+				$foto=$resul[4];
 			}
 				
 			}
-			/*if($btn=="Nuevo")
-			{
-				//echo "<script>document.getElementById('txtnitocc').focus();</script>";
-				/*$res = $MySQLiconexion->query("select count(nitocc),Max(nitocc) from tblcliente");
-				$count=0;
-				$max=0;
-				while($resul=$res->fetch_array())
-				{
-					$count=$resul[0];
-					$max=$resul[1];
-				}
-				/*if($count==0)
-				{
-					$nitocc="10";
-				}
-				else
-				{
-					$nitocc=$max+1;
-				}
-				
-			}*/
+			
 			if($btn=="Guardar")
 			{
-				$nitocc=$_POST["txtnitocc"];
-				$nombre=$_POST["txtnombre"];
-				$direccion=$_POST["txtdireccion"];
-				$telefono=$_POST["txttelefono"];
-				$fechaingreso=$_POST["txtfechaingreso"];
-				$cupocredito=$_POST["txtcupocredito"];
+				$CodProd=$_POST["txtCodProd"];
+				$Descripcion=$_POST["txtDescripcion"];
+				$PrecioCosto=$_POST["txtPrecioCosto"];
+				$Existencia=$_POST["txtExistencia"];
 				//Manejo de Foto
 				$nombre_foto=$_FILES['foto']['name'];//Nombre de la foto
 				$ruta=$_FILES['foto']['tmp_name'];//ruta o path del archivo
@@ -88,17 +62,17 @@ if(isset($_POST["btn1"]))
 				//
 				//$SQL = $MySQLiconexion->query("insert into tblcliente(nitocc,nombre,direccion,telefono,fechaingreso,cupocredito,foto) values ('$nitocc','$nombre','$direccion','$telefono','$fechaingreso','$cupocredito','$foto')");
 				// Codigo para buscar nitocc
-				$sqlbuscar="SELECT nitocc FROM tblcliente WHERE nitocc = '$nitocc' ORDER BY nitocc";
+				$sqlbuscar="SELECT CodProd FROM tblproducto WHERE CodProd = '$CodProd' ORDER BY CodProd";
 				if ($result=mysqli_query($MySQLiconexion,$sqlbuscar))
 				  {
 					  $nroregistros=mysqli_num_rows($result);
 					  if ($nroregistros>0)
 					  {
-					  	echo "<script>alert('Nitocc ya existe!!!');</script>";
+					  	echo "<script>alert('CodProd ya existe!!!');</script>";
 					  }
 					  else
 					  {
-					  	$SQL = $MySQLiconexion->query("insert into tblcliente(nitocc,nombre,direccion,telefono,fechaingreso,cupocredito,foto) values ('$nitocc','$nombre','$direccion','$telefono','$fechaingreso','$cupocredito','$foto')");
+					  	$SQL = $MySQLiconexion->query("insert into tblproducto(CodProd,Descripcion,PrecioCosto,Existencia,foto) values ('$CodProd','$Descripcion','$PrecioCosto','$Existencia','$foto')");
 					  	if(!$SQL)
 			  				{
 			   					echo $MySQLiconexion->error;
@@ -112,17 +86,15 @@ if(isset($_POST["btn1"]))
 			}
 			if($btn=="Actualizar")
 			{
-				$nitocc=$_POST["txtnitocc"];
-				$nombre=$_POST["txtnombre"];
-				$direccion=$_POST["txtdireccion"];
-				$telefono=$_POST["txttelefono"];
-				$fechaingreso=$_POST["txtfechaingreso"];
-				$cupocredito=$_POST["txtcupocredito"];
+				$CodProd=$_POST["txtCodProd"];
+				$Descripcion=$_POST["txtDescripcion"];
+				$PrecioCosto=$_POST["txtPrecioCosto"];
+				$Existencia=$_POST["txtExistencia"];
 				$nombre_foto=$_FILES['foto']['name'];//Nombre de la foto
 				$ruta=$_FILES['foto']['tmp_name'];//ruta o path del archivo
 				$foto='fotos/'.$nombre_foto; //ruta y nombre del archivo
 				copy ($ruta,$foto);//Guarda archivo en ruta especifica
-				$SQL = $MySQLiconexion->query("update tblcliente set nombre ='$nombre',direccion='$direccion',telefono='$telefono',fechaingreso='$fechaingreso',cupocredito='$cupocredito',foto='$foto' where nitocc='$nitocc'");
+				$SQL = $MySQLiconexion->query("update tblproducto set CodProd ='$CodProd',Descripcion='$Descripcion',PrecioCosto='$PrecioCosto',Existencia='$Existencia',foto='$foto' where CodProd='$CodProd'");
 				if(!$SQL)
   				{
    					echo $MySQLiconexion->error;
@@ -134,9 +106,9 @@ if(isset($_POST["btn1"]))
 			}
 			if($btn=="Eliminar")
 			{
-				$nitocc=$_POST["txtnitocc"];
+				$CodProd=$_POST["txtCodProd"];
 					
-				$SQL = $MySQLiconexion->query("delete from tblcliente where nitocc='$nitocc'");
+				$SQL = $MySQLiconexion->query("delete from tblproducto where CodProd='$CodProd'");
 			if(!$SQL)
   				{
    					echo $MySQLiconexion->error;
@@ -153,36 +125,27 @@ if(isset($_POST["btn1"]))
 <table border="0">
 <tr>
 <td>Buscar</td>
-<td><input type="text" name="txtnitoccbus"/></td>
+<td><input type="text" name="txtCodProbus"/></td>
 <td><input type="submit" name="btn1"  value="Buscar"  /></td>
 </tr></table>
 
 <table border="0">
 <tr>
-<td>Nit o CC</td>
-<td><input type="text" id="txtnitocc" name="txtnitocc" value="<?php echo $nitocc?>" /></td>
+<td>Codigo de Producto</td>
+<td><input type="text" id="txtCodProd" name="txtCodProd" value="<?php echo $CodProd?>" /></td>
 </tr>
 
 <tr>
-<td>Nombre</td>
-<td><input type="text" name="txtnombre"  value="<?php echo $nombre?>"/></td>
+<td>Descripcion</td>
+<td><input type="text" name="txtDescripcion"  value="<?php echo $Descripcion?>"/></td>
 </tr>
 <tr>
-<td>Direccion</td>
-<td><input type="text" name="txtdireccion"  value="<?php echo $direccion?>"/></td>
+<td>PrecioCosto</td>
+<td><input type="text" name="txtPrecioCosto"  value="<?php echo $PrecioCosto?>"/></td>
 </tr>
 <tr>
-<td>Telefono</td>
-<td><input type="text" name="txttelefono"  value="<?php echo $telefono?>"/></td>
-</tr>
-<tr>
-<td>Fecha Ingreso</td>
-<td><input type="text" name="txtfechaingreso"  value="<?php echo $fechaingreso?>"/></td>
-</tr>
-
-<tr>
-<td>Cupo Credito</td>
-<td><input type="text" name="txtcupocredito" value="<?php echo $cupocredito?>"/></td>
+<td>Existencia</td>
+<td><input type="text" name="txtExistencia"  value="<?php echo $Existencia?>"/></td>
 </tr>
 <tr>
 <td>Subir Foto</td>
@@ -196,7 +159,7 @@ if(isset($_POST["btn1"]))
 </tr>
 
 <tr align="center">
-<td colspan="2"><input type="button" name="btn1" value="Nuevo" onclick="document.getElementById('txtnitocc').focus();"/>
+<td colspan="2"><input type="button" name="btn1" value="Nuevo" onclick="document.getElementById('txtCodProd').focus();"/>
 <input type="submit" name="btn1" value="Listar"/>
 </td>
 </tr>
@@ -223,32 +186,25 @@ if(isset($_POST["btn1"]))
 		echo"<center>
 			<table border='3'>
 			<tr>
-			<td bgcolor='gray' style='color:yellow;font-weight: bold'>Nitocc</td>
-			<td bgcolor='gray' style='color:yellow;font-weight: bold'>Nombre</td>
-			<td bgcolor='gray' style='color:yellow;font-weight: bold'>Direccion</td>
-			<td bgcolor='gray' style='color:yellow;font-weight: bold'>Telefono</td>
-			<td bgcolor='gray' style='color:yellow;font-weight: bold'>Fecha Ingreso</td>
-			<td bgcolor='gray' style='color:yellow;font-weight: bold'>Cupo Credito</td>
+			<td bgcolor='gray' style='color:yellow;font-weight: bold'>CodProd</td>
+			<td bgcolor='gray' style='color:yellow;font-weight: bold'>Descripcion</td>
+			<td bgcolor='gray' style='color:yellow;font-weight: bold'>PrecioCosto</td>
+			<td bgcolor='gray' style='color:yellow;font-weight: bold'>Existencia</td>
 			<td bgcolor='gray' style='color:yellow;font-weight: bold'>Foto</td>
 			</tr>";
-			$res = $MySQLiconexion->query("select * from tblcliente");
+			$res = $MySQLiconexion->query("select * from tblproducto");
 			while($resul=$res->fetch_array())
 			{
-				$nitocc=$resul[0];
-				$nombre=$resul[1];
-				$direccion=$resul[2];
-				$telefono=$resul[3];
-				date_default_timezone_set('America/Bogota');
-				$fechaingreso=date("d-m-Y", strtotime($resul[4]));
-				$cupocredito=number_format($resul[5]);
-				$foto=$resul[6];
+				$CodProd=$resul[0];
+				$Descripcion=$resul[1];
+				$PrecioCosto=number_format($resul[2]);
+				$Existencia=$resul[3];
+				$foto=$resul[4];
 				echo "<tr>
-					<td>$nitocc</td>
-					<td>$nombre</td>
-					<td>$direccion</td>
-					<td>$telefono</td>
-					<td>$fechaingreso</td>
-					<td>$cupocredito</td>
+					<td>$CodProd</td>
+					<td>$Descripcion</td>
+					<td>$PrecioCosto</td>
+					<td>$Existencia</td>
 					<td><img src='$foto' width='20' height='20'></td>
 					</tr>";
 			}

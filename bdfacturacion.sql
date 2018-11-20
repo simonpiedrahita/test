@@ -28,13 +28,11 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `tblcliente`
 --
 
-CREATE TABLE `tblcliente` (
-  `nitocc` varchar(15) NOT NULL,
-  `nombre` varchar(30) NOT NULL,
-  `direccion` varchar(30) NOT NULL,
-  `telefono` varchar(12) NOT NULL,
-  `fechaingreso` date NOT NULL,
-  `cupocredito` double NOT NULL,
+CREATE TABLE `tblproducto` (
+  `CodProd` varchar(15) NOT NULL,
+  `Descripcion` varchar(30) NOT NULL,
+  `PrecioCosto` double() NOT NULL,
+  `Existencia` varchar(12) NOT NULL,
   `foto` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -42,10 +40,9 @@ CREATE TABLE `tblcliente` (
 -- Volcado de datos para la tabla `tblcliente`
 --
 
-INSERT INTO `tblcliente` (`nitocc`, `nombre`, `direccion`, `telefono`, `fechaingreso`, `cupocredito`, `foto`) VALUES
-('12', 'Pedro Rios', 'calle 46 #10-10', '2510602', '2015-05-05', 2500000, 'fotos/pedro.jpeg'),
-('15', 'Luisa Gomez', 'Carrera 23 #20-20', '5568090', '2010-04-04', 5800000, 'fotos/luisagomez.jpeg'),
-('18', 'Alberto Arango', 'Calle 5 #63-63', '3607080', '2016-05-05', 3400000, 'fotos/albertoarango.jpeg');
+INSERT INTO `tblproducto` (`CodProd`, `Descripcion`, `PrecioCosto`, `Existencia`, `foto`) VALUES
+('12', 'Pedro Rios',2510602, '20', 'fotos/pedro.jpeg'),
+
 
 --
 -- Índices para tablas volcadas
@@ -54,8 +51,8 @@ INSERT INTO `tblcliente` (`nitocc`, `nombre`, `direccion`, `telefono`, `fechaing
 --
 -- Indices de la tabla `tblcliente`
 --
-ALTER TABLE `tblcliente`
-  ADD PRIMARY KEY (`nitocc`);
+ALTER TABLE `tblproducto`
+  ADD PRIMARY KEY (`CodProd`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
